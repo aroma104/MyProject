@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="APP">
+<head>
+	<meta charset="UTF-8">
+	<title>ng-class</title>  
+	<style type="text/css">
+		.blue{color:blue;}
+		.red{color:red;}
+		.green{color:green;}
+		.underline{text-decoration: underline;}
+		b {font-size: 2em; margin:5px;}
+	</style>
+	<script src="http://code.angularjs.org/1.2.2/angular.min.js"></script>
+</head>
+<body>
+
+	<div ng-controller="theController">		
+		<!-- ng-class 는 보통 3가지 타입으로 호출 가능 -->
+
+		<!-- $scope.style1,2 에서 선언된 element type의 속성을 ng-class에서 직접호춣 -->
+		<b ng-repeat="item in items" ng-class="[style1,style2]">
+			{{ item.title }}
+		</b>
+		
+		<hr/>
+
+		<!-- {} 사이에 기입, css의 class속성을 직접 가져와 item.type에 입력 -->
+		<b ng-repeat="item in items" ng-class="{'blue':item.type===1, 'red':item.type===3}">
+			{{ item.title }}
+		</b>
+
+		<hr/>
+
+		<!-- $scope.item에 선언된 각 속성의 type에 class를 입력하는 방식 -->
+		<b ng-repeat="item in items" ng-class="{1:'blue',2:'red',3:'green'}[item.type]">
+			{{ item.title }}
+		</b>
+
+
+
+	</div>
+
+	
+	<script>
+		angular.module('APP', []).
+		controller('theController', ['$scope', function($scope){
+			$scope.items = [
+
+				{'title' : 'a', 'type' : 1},
+				{'title' : 'b', 'type' : 2},
+				{'title' : 'c', 'type' : 3},
+				{'title' : 'd', 'type' : 3}
+
+			]	
+
+			$scope.style1='red'
+			$scope.style2='underline'
+
+		}])
+	</script>
+    
+</body>
+
+</html>
