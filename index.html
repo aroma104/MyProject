@@ -11,10 +11,29 @@
 
   <body ng-app="todo" ng-controller="TodoCtrl">
     
+    <h1>Todo List</h1>
+
+    <form name="todoForm" ng-submit="add(newTodoTitle)">
+      <div class="input-group">
+        <input type="text" class="form-control" ng-model="newTodoTitle" placeholder="new todo input.." minlength="3">
+        <span class="input-group-btn">
+          <button class="btn btn-success" type="submit">추가</button>  
+        </span>        
+      </div>
+
+      <div ng-show="todoForm.$dirty && todoForm.$invalid">
+        <div class="alert alert-warning">3글자 이상 입력</div>
+      </div>
+
+    </form>
+
+    <!-- todoForm | json todoForm의 속성값 출력 -->
+    <!-- <pre>{{ todoForm | json }}</pre> -->
+
     <div class="container">
     
       <ul class="list-unstyled">
-        <li ng-repeat="todo in todos">
+        <li ng-repeat="todo in todos | filter:statusFilter">
           <div class="input-group">
             <span class="input-group-addon">
               <input type="checkbox" ng-model="todo.completed" />
@@ -28,6 +47,13 @@
           <date>{{ todo.createdAt | date:'yyyy-mm-dd HH:mm:ss' }}</date>
         </li>
       </ul>  
+
+      <!-- statusFilter 사용, 버튼 클릭 시 completed 참조  -->
+      <button class="btn btn-primary" ng-click="statusFilter={completed:true}">Completed</button>
+
+      <button class="btn btn-primary" ng-click="statusFilter={completed:false}">Active</button>
+
+      <button class="btn btn-primary" ng-click="statusFilter={}">All</button>
       
     </div>
     
